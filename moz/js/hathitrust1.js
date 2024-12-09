@@ -47,8 +47,10 @@ export default function(){
             </fieldset>
             </div>
             <p class='mb-3'>
-                <button type='button' class='btn btn-outline-dark' onclick=window.postMessage({extid:'${extid}',cmd:'begin',ctrl:event.ctrlKey||event.metaKey,alt:event.altKey},'${origin}')>
-                    <div>
+                /*<button type='button' class='btn btn-outline-dark' onclick=window.postMessage({extid:'${extid}',cmd:'begin',ctrl:event.ctrlKey||event.metaKey,alt:event.altKey},'${origin}')>*/
+                 <button type="button" class="btn btn-outline-dark" id="beginButton">
+   
+                   <div>
                         <span class='fa-solid fa-arrow-down'></span>
                         <span style='display:block' id='iadprogressid'></span>
                     </div>
@@ -63,6 +65,20 @@ export default function(){
     var status = 0;             // 0:idle, 1:downloading, 2:completed, 3:failed
     var ctrl;                   // ctrlKey
     var alt;                    // altKey
+
+    
+    document.getElementById('beginButton').addEventListener('click', function(event) {
+        const extid = '${extid}';  // Replace with the actual value
+        const origin = '${origin}';  // Replace with the actual value
+        window.postMessage({
+            extid: extid,
+            cmd: 'begin',
+            ctrl: event.ctrlKey || event.metaKey,
+            alt: event.altKey
+        }, origin);
+    });
+
+
 
     window.onmessage = async evt => {
         if (evt.origin != origin || evt.data.extid != extid) return;
